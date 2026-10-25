@@ -186,4 +186,4 @@ async def test_card_is_served(hass: HomeAssistant) -> None:
     config = hass.http.async_register_static_paths.call_args[0][0][0]
     assert config.url_path == "/prix_energie/prix-energie-card.js"
     assert config.path.endswith("frontend/prix-energie-card.js")
-    assert add_js.call_args[0][1] == "/prix_energie/prix-energie-card.js?v=1.1.0"
+    assert add_js.call_args[0][1] == "/prix_energie/prix-energie-card.js?v=1.2.0"

@@ -8,7 +8,12 @@
  */
 
 const PLATFORM = "prix_energie";
-const VERSION = "1.1.0";
+
+// Every dynamic value (titles, device names, states, units, attributes) goes through
+// esc() before being placed in innerHTML.
+const ESCAPES = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (c) => ESCAPES[c]);
+const VERSION = "1.2.0";
 
 const I18N = {
   fr: {
@@ -153,16 +158,16 @@ class PrixEnergieCard extends HTMLElement {
 
   _value(id, digits, cls = "") {
     if (!id) return "";
-    return `<span class="value ${cls}" data-entity="${id}">${this._num(id, digits)}<span class="unit"> ${this._unit(id)}</span></span>`;
+    return `<span class="value ${esc(cls)}" data-entity="${esc(id)}">${esc(this._num(id, digits))}<span class="unit"> ${esc(this._unit(id))}</span></span>`;
   }
 
   _subscription(id) {
     const s = this._state(id);
     if (!this._config.show_subscription || !s || s.attributes.per_month === undefined) return "";
     const fmt = new Intl.NumberFormat(this._hass.language, { style: "currency", currency: "EUR" });
-    return `<div class="row sub" data-entity="${id}"><span>${this._t.sub}</span><span>${fmt.format(
-      s.attributes.per_month
-    )}${this._t.perMonth}</span></div>`;
+    return `<div class="row sub" data-entity="${esc(id)}"><span>${esc(this._t.sub)}</span><span>${esc(
+      fmt.format(s.attributes.per_month)
+    )}${esc(this._t.perMonth)}</span></div>`;
   }
 
   _footer(id, energy) {
@@ -176,9 +181,9 @@ class PrixEnergieCard extends HTMLElement {
     if (a.valid_from) bits.push(`${t.since} ${this._date(a.valid_from)}`);
     if (a.period && /^\d{4}-\d{2}-\d{2}$/.test(a.period))
       bits.push(this._date(a.period, true));
-    let html = bits.length ? `<div class="meta">${bits.join(" · ")}</div>` : "";
-    if (a.stale) html += `<div class="warn"><ha-icon icon="mdi:alert"></ha-icon>${t.stale}</div>`;
-    if (a.last_errors) html += `<div class="warn"><ha-icon icon="mdi:cloud-alert"></ha-icon>${t.error}</div>`;
+    let html = bits.length ? `<div class="meta">${esc(bits.join(" · "))}</div>` : "";
+    if (a.stale) html += `<div class="warn"><ha-icon icon="mdi:alert"></ha-icon>${esc(t.stale)}</div>`;
+    if (a.last_errors) html += `<div class="warn"><ha-icon icon="mdi:cloud-alert"></ha-icon>${esc(t.error)}</div>`;
     return html;
   }
 
@@ -190,18 +195,18 @@ class PrixEnergieCard extends HTMLElement {
     if (e.electricity_price_hp) {
       detail = `
         <div class="pills">
-          <div class="pill ${period === "hp" ? "active" : ""}" data-entity="${e.electricity_price_hp}">
-            <ha-icon icon="mdi:weather-sunny"></ha-icon><span>${t.hp}</span>${this._value(e.electricity_price_hp, 4)}
+          <div class="pill ${period === "hp" ? "active" : ""}" data-entity="${esc(e.electricity_price_hp)}">
+            <ha-icon icon="mdi:weather-sunny"></ha-icon><span>${esc(t.hp)}</span>${this._value(e.electricity_price_hp, 4)}
           </div>
-          <div class="pill ${period === "hc" ? "active" : ""}" data-entity="${e.electricity_price_hc}">
-            <ha-icon icon="mdi:weather-night"></ha-icon><span>${t.hc}</span>${this._value(e.electricity_price_hc, 4)}
+          <div class="pill ${period === "hc" ? "active" : ""}" data-entity="${esc(e.electricity_price_hc)}">
+            <ha-icon icon="mdi:weather-night"></ha-icon><span>${esc(t.hc)}</span>${this._value(e.electricity_price_hc, 4)}
           </div>
         </div>`;
     }
-    const badge = period ? `<span class="badge ${period}">${period === "hc" ? t.hc : t.hp}</span>` : "";
+    const badge = period ? `<span class="badge ${esc(period)}">${esc(period === "hc" ? t.hc : t.hp)}</span>` : "";
     return `
       <div class="main">
-        <span class="label">${t.now}</span>${badge}
+        <span class="label">${esc(t.now)}</span>${badge}
         ${this._value(e.electricity_price, 4, "big")}
       </div>
       ${detail}
@@ -236,8 +241,8 @@ class PrixEnergieCard extends HTMLElement {
         const name = showDeviceName && dev ? dev.name_by_user || dev.name : t[g.energy];
         const body = this[`_${g.energy}`](g.entities);
         return `
-          <div class="section ${g.energy}">
-            <div class="head"><ha-icon icon="${ICONS[g.energy]}"></ha-icon><span>${name}</span></div>
+          <div class="section ${esc(g.energy)}">
+            <div class="head"><ha-icon icon="${esc(ICONS[g.energy])}"></ha-icon><span>${esc(name)}</span></div>
             ${body}
           </div>`;
       })
@@ -279,8 +284,8 @@ class PrixEnergieCard extends HTMLElement {
         .empty { color: var(--secondary-text-color); }
       </style>
       <ha-card>
-        ${title ? `<div class="title">${title}</div>` : ""}
-        <div class="sections">${sections || `<div class="empty">${t.none}</div>`}</div>
+        ${title ? `<div class="title">${esc(title)}</div>` : ""}
+        <div class="sections">${sections || `<div class="empty">${esc(t.none)}</div>`}</div>
       </ha-card>`;
 
     this.shadowRoot.querySelectorAll("[data-entity]").forEach((el) =>
