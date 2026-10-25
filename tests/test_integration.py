@@ -171,3 +171,19 @@ async def test_custom_prices_and_options(hass: HomeAssistant) -> None:
     assert hass.states.get("sensor.maison_eau_water_price").state == "3.9"
     # subscription cleared in the form -> removed
     assert hass.states.get("sensor.maison_electricite_electricity_subscription").state == "unavailable"
+
+
+async def test_card_is_served(hass: HomeAssistant) -> None:
+    """The Lovelace card is registered as a static path and an extra module."""
+    from unittest.mock import AsyncMock, MagicMock, patch
+
+    hass.config.components.add("frontend")
+    hass.http = MagicMock(async_register_static_paths=AsyncMock())
+    with patch("homeassistant.components.frontend.add_extra_js_url") as add_js:
+        from homeassistant.setup import async_setup_component
+
+        assert await async_setup_component(hass, DOMAIN, {})
+    config = hass.http.async_register_static_paths.call_args[0][0][0]
+    assert config.url_path == "/prix_energie/prix-energie-card.js"
+    assert config.path.endswith("frontend/prix-energie-card.js")
+    assert add_js.call_args[0][1] == "/prix_energie/prix-energie-card.js?v=1.1.0"

@@ -236,4 +236,8 @@ class CurrentElectricityPriceSensor(OffPeakMixin, SensorEntity):
             attrs["period"] = None if off_peak is None else ("hc" if off_peak else "hp")
         if elec.valid_from:
             attrs["valid_from"] = elec.valid_from
+        if elec.stale:
+            attrs["stale"] = True
+        if self.coordinator.data.errors:
+            attrs["last_errors"] = self.coordinator.data.errors
         return attrs

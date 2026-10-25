@@ -59,6 +59,22 @@ Useful attributes: `source`, `valid_from` (start date of the regulated tariff), 
 
 Prices are cached on disk: if data.gouv.fr or cre.fr is unreachable, sensors keep their last known value instead of becoming unavailable (which would break cost tracking).
 
+## Lovelace card
+
+The integration ships a simple card, loaded automatically (no resource to add, no extra HACS download).
+Edit a dashboard → *Add card* → **Prix Énergie FR**, or in YAML:
+
+```yaml
+type: custom:prix-energie-card
+title: Prix de l'énergie          # optional, "" to hide
+energies: [electricity, gas, water]  # optional filter and order
+show_subscription: true           # optional, monthly subscription line
+```
+
+It shows the current electricity price with the active period (HP/HC highlighted), the gas price in €/kWh and €/m³, the water price, the monthly subscriptions and the source of each price (regulated tariff and its start date, CRE reference month, custom prices). A warning appears when the last update failed or the tariff may be outdated. Tap any value to open its history.
+
+After updating the integration, refresh the browser (or clear the app cache) if the card still shows the old version.
+
 ## Energy dashboard
 
 *Settings → Dashboards → Energy* (entity ids below are for an English installation; with Home Assistant in French they are named e.g. `sensor.<name>_electricite_prix_electricite`):
