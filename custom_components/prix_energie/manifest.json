@@ -1,0 +1,13 @@
+{
+  "domain": "prix_energie",
+  "name": "Prix Énergie FR",
+  "codeowners": ["@globoudou"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/globoudou/home-assistant-prix-energie",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/globoudou/home-assistant-prix-energie/issues",
+  "requirements": [],
+  "version": "1.0.0"
+}

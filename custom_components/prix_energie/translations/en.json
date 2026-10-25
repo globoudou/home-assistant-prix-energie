@@ -1,0 +1,202 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Prix Énergie FR",
+        "description": "Electricity, gas and water prices for the Energy dashboard.",
+        "data": {
+          "name": "Name",
+          "energies": "Energies"
+        }
+      },
+      "electricity": {
+        "title": "Electricity",
+        "description": "Regulated tariff (Tarif Bleu, CRE open data on data.gouv.fr) or your own contract prices (all taxes included).",
+        "data": {
+          "elec_source": "Price source",
+          "elec_option": "Tariff option",
+          "elec_power_kva": "Subscribed power (kVA)",
+          "hc_schedule": "Off-peak hours",
+          "hc_entity": "Off-peak entity (optional)",
+          "elec_custom_subscription": "Annual subscription (€/year, incl. taxes)",
+          "elec_custom_base": "Base price (€/kWh)",
+          "elec_custom_hp": "Peak price (€/kWh)",
+          "elec_custom_hc": "Off-peak price (€/kWh)"
+        },
+        "data_description": {
+          "hc_schedule": "Comma separated ranges, e.g. 22:00-06:00 or 02:00-07:00, 13:00-16:00 (see your bill or Enedis).",
+          "hc_entity": "Entity telling when off-peak is active (teleinfo PTEC/LTARF, binary sensor...). Takes precedence over the hours above.",
+          "elec_custom_subscription": "Only used with your own prices."
+        }
+      },
+      "gas": {
+        "title": "Natural gas",
+        "description": "CRE gas reference price (GRDF area, updated monthly) or your own contract prices (all taxes included).",
+        "data": {
+          "gas_source": "Price source",
+          "gas_profile": "Usage profile",
+          "gas_kwh_per_m3": "Conversion coefficient (kWh/m³)",
+          "gas_custom_subscription": "Annual subscription (€/year, incl. taxes)",
+          "gas_custom_kwh": "Gas price (€/kWh)"
+        },
+        "data_description": {
+          "gas_kwh_per_m3": "Printed on your gas bill (≈ 10.5–11.5). Used for the €/m³ sensor.",
+          "gas_profile": "Cooking/hot water (< 6,000 kWh/year) or heating.",
+          "gas_custom_subscription": "Only used with your own prices."
+        }
+      },
+      "water": {
+        "title": "Water",
+        "description": "No national open data source is reliable enough: enter the price on your water bill (all taxes included, drinking water + sewage).",
+        "data": {
+          "water_price_m3": "Water price (€/m³)",
+          "water_subscription": "Annual subscription (€/year, incl. taxes)"
+        },
+        "data_description": {
+          "water_price_m3": "Total price per m³ on your bill."
+        }
+      }
+    },
+    "error": {
+      "invalid_schedule": "Invalid format, expected HH:MM-HH:MM[, HH:MM-HH:MM]",
+      "price_required": "Required with your own prices",
+      "no_energy": "Select at least one energy",
+      "invalid_coef": "Must be greater than 0"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Prix Énergie FR",
+        "data": {
+          "energies": "Energies"
+        }
+      },
+      "electricity": {
+        "title": "Electricity",
+        "description": "Regulated tariff (Tarif Bleu, CRE open data on data.gouv.fr) or your own contract prices (all taxes included).",
+        "data": {
+          "elec_source": "Price source",
+          "elec_option": "Tariff option",
+          "elec_power_kva": "Subscribed power (kVA)",
+          "hc_schedule": "Off-peak hours",
+          "hc_entity": "Off-peak entity (optional)",
+          "elec_custom_subscription": "Annual subscription (€/year, incl. taxes)",
+          "elec_custom_base": "Base price (€/kWh)",
+          "elec_custom_hp": "Peak price (€/kWh)",
+          "elec_custom_hc": "Off-peak price (€/kWh)"
+        },
+        "data_description": {
+          "hc_schedule": "Comma separated ranges, e.g. 22:00-06:00 or 02:00-07:00, 13:00-16:00 (see your bill or Enedis).",
+          "hc_entity": "Entity telling when off-peak is active (teleinfo PTEC/LTARF, binary sensor...). Takes precedence over the hours above.",
+          "elec_custom_subscription": "Only used with your own prices."
+        }
+      },
+      "gas": {
+        "title": "Natural gas",
+        "description": "CRE gas reference price (GRDF area, updated monthly) or your own contract prices (all taxes included).",
+        "data": {
+          "gas_source": "Price source",
+          "gas_profile": "Usage profile",
+          "gas_kwh_per_m3": "Conversion coefficient (kWh/m³)",
+          "gas_custom_subscription": "Annual subscription (€/year, incl. taxes)",
+          "gas_custom_kwh": "Gas price (€/kWh)"
+        },
+        "data_description": {
+          "gas_kwh_per_m3": "Printed on your gas bill (≈ 10.5–11.5). Used for the €/m³ sensor.",
+          "gas_profile": "Cooking/hot water (< 6,000 kWh/year) or heating.",
+          "gas_custom_subscription": "Only used with your own prices."
+        }
+      },
+      "water": {
+        "title": "Water",
+        "description": "No national open data source is reliable enough: enter the price on your water bill (all taxes included, drinking water + sewage).",
+        "data": {
+          "water_price_m3": "Water price (€/m³)",
+          "water_subscription": "Annual subscription (€/year, incl. taxes)"
+        },
+        "data_description": {
+          "water_price_m3": "Total price per m³ on your bill."
+        }
+      }
+    },
+    "error": {
+      "invalid_schedule": "Invalid format, expected HH:MM-HH:MM[, HH:MM-HH:MM]",
+      "price_required": "Required with your own prices",
+      "no_energy": "Select at least one energy",
+      "invalid_coef": "Must be greater than 0"
+    }
+  },
+  "selector": {
+    "energies": {
+      "options": {
+        "electricity": "Electricity",
+        "gas": "Natural gas",
+        "water": "Water"
+      }
+    },
+    "elec_source": {
+      "options": {
+        "regulated": "Regulated tariff (automatic)",
+        "custom": "My own prices"
+      }
+    },
+    "gas_source": {
+      "options": {
+        "regulated": "CRE reference price (automatic)",
+        "custom": "My own prices"
+      }
+    },
+    "elec_option": {
+      "options": {
+        "base": "Base",
+        "hphc": "Peak / Off-peak"
+      }
+    },
+    "gas_profile": {
+      "options": {
+        "cooking": "Cooking / hot water",
+        "heating": "Heating"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "electricity_price": {
+        "name": "Electricity price"
+      },
+      "electricity_price_base": {
+        "name": "Base price"
+      },
+      "electricity_price_hp": {
+        "name": "Peak price"
+      },
+      "electricity_price_hc": {
+        "name": "Off-peak price"
+      },
+      "electricity_subscription": {
+        "name": "Electricity subscription"
+      },
+      "gas_price_kwh": {
+        "name": "Gas price"
+      },
+      "gas_price_m3": {
+        "name": "Gas price per m³"
+      },
+      "gas_subscription": {
+        "name": "Gas subscription"
+      },
+      "water_price": {
+        "name": "Water price"
+      },
+      "water_subscription": {
+        "name": "Water subscription"
+      }
+    },
+    "binary_sensor": {
+      "off_peak": {
+        "name": "Off-peak hours"
+      }
+    }
+  }
+}

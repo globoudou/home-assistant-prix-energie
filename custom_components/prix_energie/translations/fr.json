@@ -1,0 +1,202 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Prix Énergie FR",
+        "description": "Prix de l'électricité, du gaz et de l'eau pour la vue Énergie.",
+        "data": {
+          "name": "Nom",
+          "energies": "Énergies"
+        }
+      },
+      "electricity": {
+        "title": "Électricité",
+        "description": "Tarif réglementé (Tarif Bleu, open data CRE sur data.gouv.fr) ou les prix de votre contrat (TTC).",
+        "data": {
+          "elec_source": "Source des prix",
+          "elec_option": "Option tarifaire",
+          "elec_power_kva": "Puissance souscrite (kVA)",
+          "hc_schedule": "Heures creuses",
+          "hc_entity": "Entité heures creuses (facultatif)",
+          "elec_custom_subscription": "Abonnement annuel (€/an TTC)",
+          "elec_custom_base": "Prix Base (€/kWh)",
+          "elec_custom_hp": "Prix heures pleines (€/kWh)",
+          "elec_custom_hc": "Prix heures creuses (€/kWh)"
+        },
+        "data_description": {
+          "hc_schedule": "Plages séparées par des virgules, ex. 22:00-06:00 ou 02:00-07:00, 13:00-16:00 (voir facture ou Enedis).",
+          "hc_entity": "Entité indiquant la période en cours (téléinfo PTEC/LTARF, binary sensor…). Prioritaire sur les plages ci-dessus.",
+          "elec_custom_subscription": "Utilisé uniquement avec vos propres prix."
+        }
+      },
+      "gas": {
+        "title": "Gaz naturel",
+        "description": "Prix repère CRE (zone GRDF, mis à jour chaque mois) ou les prix de votre contrat (TTC).",
+        "data": {
+          "gas_source": "Source des prix",
+          "gas_profile": "Usage",
+          "gas_kwh_per_m3": "Coefficient de conversion (kWh/m³)",
+          "gas_custom_subscription": "Abonnement annuel (€/an TTC)",
+          "gas_custom_kwh": "Prix du gaz (€/kWh)"
+        },
+        "data_description": {
+          "gas_kwh_per_m3": "Indiqué sur votre facture de gaz (≈ 10,5 à 11,5). Sert au capteur en €/m³.",
+          "gas_profile": "Cuisson/eau chaude (< 6 000 kWh/an) ou chauffage.",
+          "gas_custom_subscription": "Utilisé uniquement avec vos propres prix."
+        }
+      },
+      "water": {
+        "title": "Eau",
+        "description": "Aucune source nationale fiable : saisissez le prix de votre facture d'eau (TTC, eau potable + assainissement).",
+        "data": {
+          "water_price_m3": "Prix de l'eau (€/m³)",
+          "water_subscription": "Abonnement annuel (€/an TTC)"
+        },
+        "data_description": {
+          "water_price_m3": "Prix total au m³ de votre facture."
+        }
+      }
+    },
+    "error": {
+      "invalid_schedule": "Format invalide, attendu HH:MM-HH:MM[, HH:MM-HH:MM]",
+      "price_required": "Obligatoire avec vos propres prix",
+      "no_energy": "Choisissez au moins une énergie",
+      "invalid_coef": "Doit être supérieur à 0"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Prix Énergie FR",
+        "data": {
+          "energies": "Énergies"
+        }
+      },
+      "electricity": {
+        "title": "Électricité",
+        "description": "Tarif réglementé (Tarif Bleu, open data CRE sur data.gouv.fr) ou les prix de votre contrat (TTC).",
+        "data": {
+          "elec_source": "Source des prix",
+          "elec_option": "Option tarifaire",
+          "elec_power_kva": "Puissance souscrite (kVA)",
+          "hc_schedule": "Heures creuses",
+          "hc_entity": "Entité heures creuses (facultatif)",
+          "elec_custom_subscription": "Abonnement annuel (€/an TTC)",
+          "elec_custom_base": "Prix Base (€/kWh)",
+          "elec_custom_hp": "Prix heures pleines (€/kWh)",
+          "elec_custom_hc": "Prix heures creuses (€/kWh)"
+        },
+        "data_description": {
+          "hc_schedule": "Plages séparées par des virgules, ex. 22:00-06:00 ou 02:00-07:00, 13:00-16:00 (voir facture ou Enedis).",
+          "hc_entity": "Entité indiquant la période en cours (téléinfo PTEC/LTARF, binary sensor…). Prioritaire sur les plages ci-dessus.",
+          "elec_custom_subscription": "Utilisé uniquement avec vos propres prix."
+        }
+      },
+      "gas": {
+        "title": "Gaz naturel",
+        "description": "Prix repère CRE (zone GRDF, mis à jour chaque mois) ou les prix de votre contrat (TTC).",
+        "data": {
+          "gas_source": "Source des prix",
+          "gas_profile": "Usage",
+          "gas_kwh_per_m3": "Coefficient de conversion (kWh/m³)",
+          "gas_custom_subscription": "Abonnement annuel (€/an TTC)",
+          "gas_custom_kwh": "Prix du gaz (€/kWh)"
+        },
+        "data_description": {
+          "gas_kwh_per_m3": "Indiqué sur votre facture de gaz (≈ 10,5 à 11,5). Sert au capteur en €/m³.",
+          "gas_profile": "Cuisson/eau chaude (< 6 000 kWh/an) ou chauffage.",
+          "gas_custom_subscription": "Utilisé uniquement avec vos propres prix."
+        }
+      },
+      "water": {
+        "title": "Eau",
+        "description": "Aucune source nationale fiable : saisissez le prix de votre facture d'eau (TTC, eau potable + assainissement).",
+        "data": {
+          "water_price_m3": "Prix de l'eau (€/m³)",
+          "water_subscription": "Abonnement annuel (€/an TTC)"
+        },
+        "data_description": {
+          "water_price_m3": "Prix total au m³ de votre facture."
+        }
+      }
+    },
+    "error": {
+      "invalid_schedule": "Format invalide, attendu HH:MM-HH:MM[, HH:MM-HH:MM]",
+      "price_required": "Obligatoire avec vos propres prix",
+      "no_energy": "Choisissez au moins une énergie",
+      "invalid_coef": "Doit être supérieur à 0"
+    }
+  },
+  "selector": {
+    "energies": {
+      "options": {
+        "electricity": "Électricité",
+        "gas": "Gaz naturel",
+        "water": "Eau"
+      }
+    },
+    "elec_source": {
+      "options": {
+        "regulated": "Tarif réglementé (automatique)",
+        "custom": "Mes propres prix"
+      }
+    },
+    "gas_source": {
+      "options": {
+        "regulated": "Prix repère CRE (automatique)",
+        "custom": "Mes propres prix"
+      }
+    },
+    "elec_option": {
+      "options": {
+        "base": "Base",
+        "hphc": "Heures pleines / creuses"
+      }
+    },
+    "gas_profile": {
+      "options": {
+        "cooking": "Cuisson / eau chaude",
+        "heating": "Chauffage"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "electricity_price": {
+        "name": "Prix électricité"
+      },
+      "electricity_price_base": {
+        "name": "Prix Base"
+      },
+      "electricity_price_hp": {
+        "name": "Prix heures pleines"
+      },
+      "electricity_price_hc": {
+        "name": "Prix heures creuses"
+      },
+      "electricity_subscription": {
+        "name": "Abonnement électricité"
+      },
+      "gas_price_kwh": {
+        "name": "Prix gaz"
+      },
+      "gas_price_m3": {
+        "name": "Prix gaz au m³"
+      },
+      "gas_subscription": {
+        "name": "Abonnement gaz"
+      },
+      "water_price": {
+        "name": "Prix eau"
+      },
+      "water_subscription": {
+        "name": "Abonnement eau"
+      }
+    },
+    "binary_sensor": {
+      "off_peak": {
+        "name": "Heures creuses"
+      }
+    }
+  }
+}
